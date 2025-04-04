@@ -1,4 +1,6 @@
-Blog Web Application
+
+-----------------------------Blog Web Application---------------------------------
+
 A MERN (MongoDB, Express.js, React.js, Node.js) stack project with full authentication and CRUD functionality.
 
 Key Features:
