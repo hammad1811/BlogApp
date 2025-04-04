@@ -19,20 +19,9 @@ function EditPost() {
       try {
         const res = await axios.get(
           `http://localhost:8000/api/v1/blog/getPostById/${id}`,
-          { 
-            withCredentials: true,
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            }
-          }
+          { withCredentials: true }
         );
-        
-        if (res.data?.data) {
-          setPost(res.data.data);
-        } else {
-          throw new Error("Invalid API response format");
-        }
+        setPost(res.data.data);
       } catch (error) {
         setError("Failed to fetch post. Please try again later.");
         toast.error("Failed to fetch post");
@@ -41,7 +30,6 @@ function EditPost() {
       }
     };
     fetchData();
-    
   }, [id]);
 
   const handleDelete = async () => {
@@ -55,122 +43,72 @@ function EditPost() {
         navigate("/user-blogs");
       } catch (error) {
         toast.error("Failed to delete post");
-        console.error("Delete error:", error);
       }
     }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+      <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center p-6 max-w-md bg-white rounded-xl shadow-lg">
-          <div className="text-red-500 text-lg mb-4">{error}</div>
-          <button
-            onClick={() => navigate(-1)}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-          >
-            Go Back
-          </button>
+      <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div className="text-center bg-white shadow-lg p-6 rounded-lg">
+          <p className="text-red-500 text-lg">{error}</p>
+          <button onClick={() => navigate(-1)} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Go Back</button>
         </div>
       </div>
     );
   }
 
-  if (!post) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center p-6 max-w-md bg-white rounded-xl shadow-lg">
-          <div className="text-gray-600 text-lg mb-4">Post not found</div>
-          <button
-            onClick={() => navigate(-1)}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-          >
-            Go Back
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  const formattedDate = post.createdAt 
-    ? new Date(post.createdAt).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      }) 
-    : 'Unknown date';
+  const formattedDate = new Date(post.createdAt).toLocaleDateString("en-US", {
+    year: "numeric", month: "long", day: "numeric"
+  });
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto">
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center text-indigo-600 hover:text-indigo-800 mb-8 transition-colors"
-        >
-          <FiArrowLeft className="mr-2" />
-          Back to posts
+    <div className="min-h-screen bg-gray-50 py-10 px-4 sm:px-8">
+      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
+        <button onClick={() => navigate(-1)} className="flex items-center text-blue-600 hover:text-blue-800 p-4">
+          <FiArrowLeft className="mr-2" /> Back to posts
         </button>
 
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          {/* Full-width image */}
-          {post.coverImage && (
-            <div className="w-full h-full overflow-hidden">
-              <img
-                src={post.coverImage}
-                alt={post.title}
-                className="w-full h-full object-contain"
-              />
-            </div>
-          )}
+        {post.coverImage && (
+          <div className="w-full overflow-hidden">
+            <img src={post.coverImage} alt={post.title} className="w-full" />
+          </div>
+        )}
 
-          <div className="p-8">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">{post.title}</h1>
-                <div className="flex items-center space-x-4 text-gray-500">
-                  <div className="flex items-center">
-                    <FiUser className="mr-1" />
-                    <span>{post.author?.username || 'Unknown author'}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <FiClock className="mr-1" />
-                    <span>{formattedDate}</span>
-                  </div>
-                </div>
-              </div>
-              
-              {isAuthor && (
-                <div className="mt-4 sm:mt-0 flex space-x-3">
-                  <button
-                    onClick={() => navigate(`/edit-page/${id}`)}
-                    className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-                  >
-                    <FiEdit2 className="mr-2" />
-                    Edit
-                  </button>
-                  <button
-                    onClick={handleDelete}
-                    className="flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                  >
-                    <FiTrash2 className="mr-2" />
-                    Delete
-                  </button>
-                </div>
-              )}
+        <div className="p-6">
+          <h1 className="text-3xl font-semibold text-gray-900 mb-4">{post.title}</h1>
+          <div className="flex items-center space-x-4 text-gray-500">
+            <div className="flex items-center">
+              <FiUser className="mr-1" />
+              <span>{post.author?.username || "Unknown author"}</span>
             </div>
-
-            <div className="prose max-w-none text-gray-700">
-              <div dangerouslySetInnerHTML={{ __html: post.content }} />
+            <div className="flex items-center">
+              <FiClock className="mr-1" />
+              <span>{formattedDate}</span>
             </div>
           </div>
+          <div className="mt-6 text-gray-700 prose">
+            <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          </div>
+
+          {isAuthor && (
+            <div className="flex justify-end space-x-3 mt-6">
+              <button onClick={() => navigate(`/edit-page/${id}`)} className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                <FiEdit2 className="mr-2" /> Edit
+              </button>
+              <button onClick={handleDelete} className="flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                <FiTrash2 className="mr-2" /> Delete
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
