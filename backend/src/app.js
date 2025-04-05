@@ -27,7 +27,7 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/blog", postRoutes);
 
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.status(200).json({
       status: 'success',
       message: 'Blog App Backend is running',
