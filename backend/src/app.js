@@ -9,7 +9,7 @@ app.use(cors({
     origin: [
         process.env.CORS_ORIGIN,
         'https://blog-wave-chi.vercel.app',
-        'http://localhost:8000'  // For local testing
+        'http://localhost:5173'  // For local testing
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
