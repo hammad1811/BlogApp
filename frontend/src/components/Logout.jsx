@@ -16,7 +16,7 @@ function Logout() {
         try {
             // First try to call the logout endpoint
             await axios.get(
-                'http://localhost:8000/api/v1/user/logout',
+                `${import.meta.env.VITE_PORT}/api/v1/user/logout`,
                 { 
                     withCredentials: true,
                     headers: {

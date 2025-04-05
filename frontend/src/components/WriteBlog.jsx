@@ -55,7 +55,7 @@ export default function WriteBlog({ post }) {
       if (post && post._id) {
         // If editing, use PUT request
         response = await axios.put(
-          `http://localhost:8000/api/v1/blog/updatePost/${post._id}`,
+          `${import.meta.env.VITE_PORT}/api/v1/blog/updatePost/${post._id}`,
           formData,
           { withCredentials: true, headers: { "Content-Type": "multipart/form-data" } }
         );
@@ -67,7 +67,7 @@ export default function WriteBlog({ post }) {
       } else {
         // If creating new post, use POST request
         response = await axios.post(
-          "http://localhost:8000/api/v1/blog/createPost",
+          `${import.meta.env.VITE_PORT}/api/v1/blog/createPost`,
           formData,
           { withCredentials: true, headers: { "Content-Type": "multipart/form-data" } }
         );

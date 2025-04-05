@@ -18,7 +18,7 @@ function EditPost() {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/v1/blog/getPostById/${id}`,
+          `${import.meta.env.VITE_PORT}/api/v1/blog/getPostById/${id}`,
           { withCredentials: true }
         );
         setPost(res.data.data);
@@ -36,7 +36,7 @@ function EditPost() {
     if (window.confirm("Are you sure you want to delete this post?")) {
       try {
         await axios.delete(
-          `http://localhost:8000/api/v1/blog/deletePost/${id}`,
+          `${import.meta.env.VITE_PORT}/api/v1/blog/deletePost/${id}`,
           { withCredentials: true }
         );
         toast.success("Post deleted successfully");

@@ -17,7 +17,7 @@ function Login() {
       setLoading(true);
       setError('');
       
-      const response = await axios.post('http://localhost:8000/api/v1/user/login', {
+      const response = await axios.post(`${import.meta.env.VITE_PORT}/api/v1/user/login`, {
         email: data.email,
         password: data.password
       }, {

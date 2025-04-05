@@ -17,7 +17,7 @@ function UserBlogs() {
     const fetchPosts = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8000/api/v1/blog/getPersonalPosts",
+          `${import.meta.env.VITE_PORT}/api/v1/blog/getPersonalPosts`,
           {
             withCredentials: true,
             headers: {
@@ -59,7 +59,7 @@ function UserBlogs() {
     setError("");
     try {
       const res = await axios.get(
-        "http://localhost:8000/api/v1/blog/getPersonalPosts",
+        `${import.meta.env.VITE_PORT}/api/v1/blog/getPersonalPosts`,
         {
           withCredentials: true,
           headers: {

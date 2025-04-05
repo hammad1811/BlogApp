@@ -7,7 +7,7 @@ const Features = () => {
  useEffect(() => {
     const fetchedPosts = async ()=>{
       try {
-        const response = await axios.get('http://localhost:8000/api/v1/blog/getAllPosts');
+        const response = await axios.get(`${import.meta.env.VITE_PORT}/api/v1/blog/getAllPosts`);
         setFeaturedPosts(response.data.data.slice(0, 3));
       } catch (error) {
         console.error('Error fetching featured posts:', error);

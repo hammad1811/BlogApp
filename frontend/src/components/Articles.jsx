@@ -12,7 +12,7 @@ const Articles = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/v1/blog/getAllPosts");
+        const res = await axios.get(`${import.meta.env.VITE_PORT}/api/v1/blog/getAllPosts`);
         
         if (res.data && Array.isArray(res.data.data)) {
           setPosts(res.data.data);

@@ -15,7 +15,7 @@ function EditPost() {
 
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/api/v1/blog/getPostById/${id}`, {
+        const res = await axios.get(`${import.meta.env.VITE_PORT}/api/v1/blog/getPostById/${id}`, {
           withCredentials: true,
           headers: {
             'Content-Type': 'application/json',
