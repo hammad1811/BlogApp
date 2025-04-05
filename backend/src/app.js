@@ -6,9 +6,14 @@ const app = express();
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || 'https://blog-wave-chi.vercel.app',
+    origin: [
+        process.env.CORS_ORIGIN,
+        'https://blog-wave-chi.vercel.app',
+        'http://localhost:8000'  // For local testing
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 app.use(cookieParser());
 app.use(express.static('public'));
