@@ -27,7 +27,21 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/blog", postRoutes);
 
 
-
+app.get('/', (req, res) => {
+    res.status(200).json({
+      status: 'success',
+      message: 'Blog App Backend is running',
+      timestamp: new Date().toISOString()
+    });
+  });
+  
+  // 404 handler
+  app.use((req, res) => {
+    res.status(404).json({
+      status: 'error',
+      message: 'Route not found'
+    });
+  });
 
 
 
