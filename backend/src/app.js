@@ -33,14 +33,6 @@ app.get('/', (req, res) => {
       timestamp: new Date().toISOString()
     });
   });
-  
-  // 404 handler
-  app.use((req, res) => {
-    res.status(404).json({
-      status: 'error',
-      message: 'Route not found'
-    });
-  });
 
 
 
