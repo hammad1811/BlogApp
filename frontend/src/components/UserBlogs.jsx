@@ -20,10 +20,7 @@ function UserBlogs() {
           `${import.meta.env.VITE_PORT}/api/v1/blog/getPersonalPosts`,
           {
             withCredentials: true,
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
+          
           }
         );
 
@@ -62,10 +59,7 @@ function UserBlogs() {
         `${import.meta.env.VITE_PORT}/api/v1/blog/getPersonalPosts`,
         {
           withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
+         
         }
       );
       if (res.data && Array.isArray(res.data.data)) {
