@@ -11,8 +11,7 @@ app.use(cors({
         'http://localhost:5173'  // For local testing
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }));
 app.use(cookieParser());
 app.use(express.static('public'));
