@@ -8,6 +8,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors({
     origin: [
         process.env.CORS_ORIGIN,
+       " https://blog-wave-chi.vercel.app",
         'http://localhost:5173'  // For local testing
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
