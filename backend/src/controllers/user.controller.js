@@ -98,6 +98,8 @@ const loginUser = asncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
+    sameSite: 'none', // Required for cross-site cookies
+  maxAge: 1000 * 60 * 60 * 24 // 1 day
   };
 
   return res
@@ -121,6 +123,8 @@ const logoutUser = asncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
+    sameSite: 'none', // Required for cross-site cookies
+  maxAge: 1000 * 60 * 60 * 24 // 1 day
   };
 
   return res
@@ -188,7 +192,9 @@ const refreshAccessToken = asncHandler(async (req, res) => {
     
         const options = {
             httpOnly: true,
-            secure: true
+            secure: true,
+            sameSite: 'none', // Required for cross-site cookies
+  maxAge: 1000 * 60 * 60 * 24 // 1 day
         }
     
         const {accessToken, newRefreshToken} = await generateAccessOrRefeshToken(user._id)
