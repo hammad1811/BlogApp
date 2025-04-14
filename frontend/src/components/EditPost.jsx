@@ -16,7 +16,7 @@ function EditPost() {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [isLiked, setIsLiked] = useState("");
+  const [isLiked, setIsLiked] = useState({});
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.userData);
   const isAuthor = authStatus && post && post.author._id === authStatus._id;
@@ -38,6 +38,7 @@ function EditPost() {
 
           setPost(postRes.data.data);
           setIsLiked(likeRes.data.data); // Assuming the API returns { success: boolean }
+          
         } catch (error) {
           setError("Failed to fetch data. Please try again later.");
           toast.error("Failed to fetch data");
