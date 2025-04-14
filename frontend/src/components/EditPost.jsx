@@ -16,39 +16,36 @@ function EditPost() {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [isLiked, setIsLiked] = useState(false);
+  const [likeStatus, setLikeStatus] = useState(false);
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.userData);
   const isAuthor = authStatus && post && post.author._id === authStatus._id;
 
-  useEffect(
-    () => {
-      const fetchData = async () => {
-        try {
-          const [postRes, likeRes] = await Promise.all([
-            axios.get(
-              `${import.meta.env.VITE_PORT}/api/v1/blog/getPostById/${id}`,
-              { withCredentials: true }
-            ),
-            axios.get(
-              `${import.meta.env.VITE_PORT}/api/v1/like/toggleLike/${id}`,
-              { withCredentials: true }
-            ),
-          ]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const postRes = await axios.get(
+          `${import.meta.env.VITE_PORT}/api/v1/blog/getPostById/${id}`,
+          { withCredentials: true }
+        );
 
-          setPost(postRes.data.data);
-          setIsLiked(likeRes.data.data.success); // Assuming the API returns { success: boolean }
-          
-        } catch (error) {
-          setError("Failed to fetch data. Please try again later.");
-          toast.error("Failed to fetch data");
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchData();
-    },[id]
-  );
+        const likeStatusRes = await axios.get(
+          `${import.meta.env.VITE_PORT}/api/v1/like/getLikeStatus/${id}`, // Replace with your API endpoint for fetching like status
+          { withCredentials: true }
+        );
+
+        setPost(postRes.data.data);
+        setLikeStatus(likeStatusRes.data.data.success);
+      } catch (error) {
+        setError("Failed to fetch data. Please try again later.");
+        toast.error("Failed to fetch data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this post?")) {
@@ -68,11 +65,12 @@ function EditPost() {
   const handleLike = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_PORT}/api/v1/like/toggleLike/${id}`,
+        `${import.meta.env.VITE_PORT}/api/v1/like/toggleLike/${id}`, // Replace with your toggle API endpoint
         { withCredentials: true }
       );
-      setIsLiked(res.data.data.success); // Assuming the API returns { success: boolean }
-      // Assuming the API returns { success: boolean }
+      setLikeStatus(res.data.data.success);
+
+      toast.success(res.data.message || "Like status updated");
     } catch (error) {
       setError("Failed to toggle like. Please try again later.");
       toast.error("Failed to toggle like");
@@ -136,7 +134,7 @@ function EditPost() {
             </h1>
             {authStatus && !isAuthor && (
               <button onClick={handleLike} className="focus:outline-none">
-                {isLiked === true ? (
+                {likeStatus === true ? (
                   <svg
                     className="h-10 w-10 text-red-500"
                     xmlns="http://www.w3.org/2000/svg"

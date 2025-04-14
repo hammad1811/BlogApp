@@ -29,6 +29,18 @@ const toggleLike = asncHandler(async (req, res) => {
     .json(new ApiResponse(201, "Like added successfully", {data: newLike, success: true}));
 });
 
+const getLikeStatus = asncHandler(async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user._id;
+  // Check if the user has already liked the post
+  const existingLike = await Like.findOne({ postId: id, userId: userId });
+  if (existingLike) {
+    return res.status(200).json(new ApiResponse(200, "Like status fetched successfully", {success: true}));
+  }
+  return res.status(200).json(new ApiResponse(200, "Like status fetched successfully", {success: false}));
+});
+
+
 const totalLikes = asncHandler(async (req, res) => {
   const { id } = req.params;
   const totalLikes = await Like.countDocuments({ postId: id });
@@ -40,4 +52,4 @@ const totalLikes = asncHandler(async (req, res) => {
     .json(new ApiResponse(200, "Total likes fetched successfully",totalLikes));
 });
 
-export { toggleLike, totalLikes };
+export { toggleLike, totalLikes, getLikeStatus };
