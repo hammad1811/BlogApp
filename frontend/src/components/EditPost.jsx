@@ -47,9 +47,7 @@ function EditPost() {
         }
       };
       fetchData();
-    },
-    [],
-    [id]
+    },[id]
   );
 
   const handleDelete = async () => {
