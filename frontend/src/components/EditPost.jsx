@@ -16,7 +16,7 @@ function EditPost() {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [isLiked, setIsLiked] = useState({});
+  const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.userData);
   const isAuthor = authStatus && post && post.author._id === authStatus._id;
@@ -37,7 +37,7 @@ function EditPost() {
           ]);
 
           setPost(postRes.data.data);
-          setIsLiked(likeRes.data.data); // Assuming the API returns { success: boolean }
+          setIsLiked(likeRes.data.data.success); // Assuming the API returns { success: boolean }
           
         } catch (error) {
           setError("Failed to fetch data. Please try again later.");
@@ -73,7 +73,7 @@ function EditPost() {
         `${import.meta.env.VITE_PORT}/api/v1/like/toggleLike/${id}`,
         { withCredentials: true }
       );
-      setIsLiked(res.data.data);
+      setIsLiked(res.data.data.success); // Assuming the API returns { success: boolean }
       // Assuming the API returns { success: boolean }
     } catch (error) {
       setError("Failed to toggle like. Please try again later.");
@@ -138,7 +138,7 @@ function EditPost() {
             </h1>
             {authStatus && !isAuthor && (
               <button onClick={handleLike} className="focus:outline-none">
-                {isLiked.success === true ? (
+                {isLiked === true ? (
                   <svg
                     className="h-10 w-10 text-red-500"
                     xmlns="http://www.w3.org/2000/svg"
