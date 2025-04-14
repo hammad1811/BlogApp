@@ -7,9 +7,12 @@ export default defineConfig({
   server: {
     proxy: { 
       "/api": {
-        target: "https://blog-app-server-gules.vercel.app",
+        target: "http://localhost:8000",
         changeOrigin: true
       }
     }
   }
 })
+
+
+// https://blog-app-server-gules.vercel.app

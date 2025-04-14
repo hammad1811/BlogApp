@@ -21,9 +21,11 @@ app.use(express.static('public'));
 
 import userRoutes from "./routes/user.routes.js"
 import postRoutes from "./routes/blog.routes.js"
+import likeRoutes from "./routes/like.routes.js"
 
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/blog", postRoutes);
+app.use("/api/v1/like", likeRoutes);
 
 
 app.get('/', (req, res) => {
